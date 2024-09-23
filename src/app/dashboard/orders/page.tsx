@@ -6,14 +6,14 @@ import { useQuery } from "react-query";
 import { orderColumns } from "./colums";
 
 const Orders = () => {
-  const getPosts = async () => {
+  const getOrders = async () => {
     const { data } = await axios(
       "https://agriguru.pythonanywhere.com/api/orders/"
     );
     return data;
   };
   const { data: orders } = useQuery("orders", {
-    queryFn: getPosts,
+    queryFn: getOrders,
   });
   return (
     <div>

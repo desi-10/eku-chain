@@ -22,6 +22,10 @@ const DashboardSideBar = () => {
       link: "/dashboard/produces",
     },
     {
+      name: "Payments",
+      link: "/dashboard/payments",
+    },
+    {
       name: "Purchase-Request",
       link: "/dashboard/purchase-requests",
     },

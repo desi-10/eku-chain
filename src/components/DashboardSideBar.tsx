@@ -36,7 +36,7 @@ const DashboardSideBar = () => {
   ];
 
   return (
-    <div className="hidden border-r bg-muted/40 h-full md:block bg-emerald-500 text-white">
+    <div className="hidden border-r h-full md:block bg-emerald-500 text-white">
       <div className="flex flex-col gap-2">
         <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
           <Link href="/dashboard">

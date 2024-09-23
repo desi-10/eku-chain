@@ -86,7 +86,7 @@ export default function Home() {
         </div>
         <div className="hidden bg-muted lg:block">
           <Image
-            src="/placeholder.svg"
+            src="/farm.jpg"
             alt="Image"
             width="1920"
             height="1080"

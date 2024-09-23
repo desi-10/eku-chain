@@ -17,7 +17,7 @@ const Orders = () => {
   });
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-5">Posts</h1>
+      <h1 className="text-3xl font-bold mb-5">Orders</h1>
       <DataTable columns={orderColumns} data={orders} />
     </div>
   );

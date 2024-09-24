@@ -60,7 +60,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         ...session.user, // Existing session user fields
         ...token, // Add all fields from the token to the session user
         id: token.sub as string, // Ensure the 'id' field is included
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } as any;
+      console.log(session);
       return session;
     },
   },

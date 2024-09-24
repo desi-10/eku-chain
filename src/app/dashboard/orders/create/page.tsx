@@ -55,7 +55,13 @@ const OrderCreateForm = () => {
     fetchProduces();
   }, []);
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: {
+    farmer: number;
+    order_description: string;
+    order_status: string;
+    produce: string;
+    quantity: number;
+  }) => {
     console.log(data);
     const submitOrder = async () => {
       if (status === "authenticated" && session?.user?.farmer_id) {
@@ -79,24 +85,24 @@ const OrderCreateForm = () => {
           console.log("Order submitted successfully");
           reset(); // Clear inputs if successful
           Swal.fire({
-            icon: 'success',
-            title: 'Order Submitted',
-            text: 'Your order has been submitted successfully.',
+            icon: "success",
+            title: "Order Submitted",
+            text: "Your order has been submitted successfully.",
           });
         } catch (error) {
           console.error("Error submitting order:", error);
           Swal.fire({
-            icon: 'error',
-            title: 'Order Submission Failed',
-            text: 'Failed to submit your order. Please try again.',
+            icon: "error",
+            title: "Order Submission Failed",
+            text: "Failed to submit your order. Please try again.",
           });
         }
       } else {
         console.error("User is not authenticated or farmer_id is missing");
         Swal.fire({
-          icon: 'error',
-          title: 'Authentication Error',
-          text: 'User is not authenticated or farmer_id is missing.',
+          icon: "error",
+          title: "Authentication Error",
+          text: "User is not authenticated or farmer_id is missing.",
         });
       }
     };

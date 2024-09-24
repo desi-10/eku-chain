@@ -38,16 +38,40 @@ type Payment = {
   order: number;
 };
 
-type Order = {
+interface Order {
   id: number;
-  order_number: null;
+  farmer: Farmer;
+  produce: Produce;
+  order_number: string;
   order_description: string;
   quantity: number;
   order_status: string;
   order_date: string;
   last_updated: string;
-  farmer: number;
-  produce: number;
+}
+
+interface Produce {
+  id: number;
+  name: string;
+  description: string;
+  image: string;
+  created_at: string;
+  updated_at: string;
+}
+
+interface Farmer {
+  id: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  username: string;
+  role: string;
+  phone_number: string;
+  address: string;
+  bio: string;
+  profile_picture: string;
+  is_verified: boolean;
+  user: number;
 }
 
 const Overview = async () => {
@@ -195,12 +219,12 @@ const Overview = async () => {
             {orderData?.map((order: Order) => (
               <div key={order.id} className="flex items-center gap-4">
                 <Avatar className="hidden h-9 w-9 sm:flex">
-                  <AvatarImage src="/avatars/01.png" alt="Avatar" />
+                  <AvatarImage src={order?.produce?.image} alt="Avatar" />
                   <AvatarFallback>OM</AvatarFallback>
                 </Avatar>
                 <div className="grid gap-1">
                   <p className="text-sm font-medium leading-none">
-                    {order?.produce}
+                    {order?.produce?.name}
                   </p>
                   <p className="text-sm text-muted-foreground">
                     {new Date(order?.last_updated).toLocaleDateString()}

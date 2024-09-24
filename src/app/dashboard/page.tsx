@@ -36,6 +36,18 @@ type Payment = {
   payment_reference: string;
   payment_description: string;
   order: number;
+};
+
+type Order = {
+  id: number;
+  order_number: null;
+  order_description: string;
+  quantity: number;
+  order_status: string;
+  order_date: string;
+  last_updated: string;
+  farmer: number;
+  produce: number;
 }
 
 const Overview = async () => {
@@ -121,11 +133,11 @@ const Overview = async () => {
             <div className="grid gap-2">
               <CardTitle>Transactions</CardTitle>
               <CardDescription>
-                Recent transactions from your store.
+                Recent transactions from your factory.
               </CardDescription>
             </div>
             <Button asChild size="sm" className="ml-auto gap-1">
-              <Link href="#">
+              <Link href="/dashboard/payments">
                 View All
                 <ArrowUpRight className="h-4 w-4" />
               </Link>
@@ -148,7 +160,9 @@ const Overview = async () => {
                 {paymentData?.map((payment: Payment) => (
                   <TableRow key={payment.id}>
                     <TableCell>
-                      <div className="font-medium">{payment?.payment_reference}</div>
+                      <div className="font-medium">
+                        {payment?.payment_reference}
+                      </div>
                       <div className="hidden text-sm text-muted-foreground md:inline">
                         {new Date(payment?.payment_date).toLocaleDateString()}
                       </div>
@@ -164,7 +178,9 @@ const Overview = async () => {
                     <TableCell className="hidden md:table-cell lg:hidden xl:table-column">
                       2023-06-23
                     </TableCell>
-                    <TableCell className="text-right">GHC {payment?.amount}</TableCell>
+                    <TableCell className="text-right">
+                      GHC {payment?.amount}
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -173,76 +189,26 @@ const Overview = async () => {
         </Card>
         <Card x-chunk="dashboard-01-chunk-5">
           <CardHeader>
-            <CardTitle>Recent Sales</CardTitle>
+            <CardTitle>Recent Order</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-8">
-            <div className="flex items-center gap-4">
-              <Avatar className="hidden h-9 w-9 sm:flex">
-                <AvatarImage src="/avatars/01.png" alt="Avatar" />
-                <AvatarFallback>OM</AvatarFallback>
-              </Avatar>
-              <div className="grid gap-1">
-                <p className="text-sm font-medium leading-none">
-                  Olivia Martin
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  olivia.martin@email.com
-                </p>
+            {orderData?.map((order: Order) => (
+              <div key={order.id} className="flex items-center gap-4">
+                <Avatar className="hidden h-9 w-9 sm:flex">
+                  <AvatarImage src="/avatars/01.png" alt="Avatar" />
+                  <AvatarFallback>OM</AvatarFallback>
+                </Avatar>
+                <div className="grid gap-1">
+                  <p className="text-sm font-medium leading-none">
+                    {order?.produce}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {new Date(order?.last_updated).toLocaleDateString()}
+                  </p>
+                </div>
+                <div className="ml-auto font-medium">{order?.quantity}</div>
               </div>
-              <div className="ml-auto font-medium">+$1,999.00</div>
-            </div>
-            <div className="flex items-center gap-4">
-              <Avatar className="hidden h-9 w-9 sm:flex">
-                <AvatarImage src="/avatars/02.png" alt="Avatar" />
-                <AvatarFallback>JL</AvatarFallback>
-              </Avatar>
-              <div className="grid gap-1">
-                <p className="text-sm font-medium leading-none">Jackson Lee</p>
-                <p className="text-sm text-muted-foreground">
-                  jackson.lee@email.com
-                </p>
-              </div>
-              <div className="ml-auto font-medium">+$39.00</div>
-            </div>
-            <div className="flex items-center gap-4">
-              <Avatar className="hidden h-9 w-9 sm:flex">
-                <AvatarImage src="/avatars/03.png" alt="Avatar" />
-                <AvatarFallback>IN</AvatarFallback>
-              </Avatar>
-              <div className="grid gap-1">
-                <p className="text-sm font-medium leading-none">
-                  Isabella Nguyen
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  isabella.nguyen@email.com
-                </p>
-              </div>
-              <div className="ml-auto font-medium">+$299.00</div>
-            </div>
-            <div className="flex items-center gap-4">
-              <Avatar className="hidden h-9 w-9 sm:flex">
-                <AvatarImage src="/avatars/04.png" alt="Avatar" />
-                <AvatarFallback>WK</AvatarFallback>
-              </Avatar>
-              <div className="grid gap-1">
-                <p className="text-sm font-medium leading-none">William Kim</p>
-                <p className="text-sm text-muted-foreground">will@email.com</p>
-              </div>
-              <div className="ml-auto font-medium">+$99.00</div>
-            </div>
-            <div className="flex items-center gap-4">
-              <Avatar className="hidden h-9 w-9 sm:flex">
-                <AvatarImage src="/avatars/05.png" alt="Avatar" />
-                <AvatarFallback>SD</AvatarFallback>
-              </Avatar>
-              <div className="grid gap-1">
-                <p className="text-sm font-medium leading-none">Sofia Davis</p>
-                <p className="text-sm text-muted-foreground">
-                  sofia.davis@email.com
-                </p>
-              </div>
-              <div className="ml-auto font-medium">+$39.00</div>
-            </div>
+            ))}
           </CardContent>
         </Card>
       </div>

@@ -12,41 +12,23 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 
-// Define the FarmerResponse type according to the data structure provided.
-interface FarmerResponse {
-  id: number; // Unique identifier for the farmer response
-  username: string; // Username of the farmer
-  first_name: string; // First name of the farmer (optional)
-  last_name: string; // Last name of the farmer (optional)
-  accepted: boolean; // Whether the response is accepted
-  rejected: boolean; // Whether the response is rejected
-  price_per_ton: number | null; // Price per ton offered by the farmer (nullable)
-  response_date: string; // Date of the response in ISO string format
+// Define the PurchaseRequest type based on the provided data structure.
+interface PurchaseRequest {
+  id: number;
+  quantity_requested: number;
+  produce: string;
+  proposed_price: string;
+  pickup_date: string;
+  accepted: boolean;
+  rejected: boolean;
+  response_date: string;
+  price_per_ton: string | null;
+  purchase_request: number;
+  farmer: number;
 }
 
-// Define the ProduceDetails type according to the data structure provided.
-interface ProduceDetails {
-  id: number; // Unique identifier for the produce
-  name: string; // Name of the produce
-  description: string; // Description of the produce
-  image: string; // URL of the produce image
-}
-
-// Define the Request type according to the data structure provided.
-interface Request {
-  id: number; // Unique identifier for the request
-  farmers_responded: FarmerResponse[]; // Array of responses from farmers
-  produce_details: ProduceDetails; // Details of the produce requested
-  quantity_requested: number; // Quantity of produce requested
-  proposed_price: string; // Proposed price for the produce
-  pickup_date: string; // Date for pickup in ISO string format
-  status: string; // Status of the request (e.g., pending)
-  created_at: string; // Creation date of the request in ISO string format
-  produce: number; // Reference to the produce ID
-}
-
-// Define the columns for the Request table
-export const requestColumns: ColumnDef<Request>[] = [
+// Define the columns for the PurchaseRequest table
+export const purchaseRequestColumns: ColumnDef<PurchaseRequest>[] = [
   {
     // Checkbox column for selecting rows
     id: "select",
@@ -100,9 +82,22 @@ export const requestColumns: ColumnDef<Request>[] = [
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
-    cell: ({ row }) => (
-      <div className="">{row.original.quantity_requested}</div>
+    cell: ({ row }) => <div>{row.original.quantity_requested}</div>,
+  },
+  {
+    // Column for Produce
+    id: "produce",
+    accessorKey: "produce",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Produce
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
     ),
+    cell: ({ row }) => <div>{row.original.produce}</div>,
   },
   {
     // Column for Proposed Price
@@ -117,24 +112,7 @@ export const requestColumns: ColumnDef<Request>[] = [
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
-    cell: ({ row }) => <div className="">{row.original.proposed_price}</div>,
-  },
-  {
-    // Column for Produce Name
-    id: "produceName",
-    accessorKey: "produce_details.name",
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        Produce Name
-        <ArrowUpDown className="ml-2 h-4 w-4" />
-      </Button>
-    ),
-    cell: ({ row }) => (
-      <div className="">{row?.original?.produce_details?.name}</div>
-    ),
+    cell: ({ row }) => <div>{row.original.proposed_price}</div>,
   },
   {
     // Column for Pickup Date
@@ -150,25 +128,22 @@ export const requestColumns: ColumnDef<Request>[] = [
       </Button>
     ),
     cell: ({ row }) => (
-      <div className="">
-        {new Date(row.original.pickup_date).toLocaleDateString()}
-      </div>
+      <div>{new Date(row.original.pickup_date).toLocaleDateString()}</div>
     ),
   },
   {
-    // Column for Status
-    id: "status",
-    accessorKey: "status",
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        Status
-        <ArrowUpDown className="ml-2 h-4 w-4" />
-      </Button>
-    ),
-    cell: ({ row }) => <div className="">{row.original.status}</div>,
+    // Column for Accepted
+    id: "accepted",
+    accessorKey: "accepted",
+    header: "Accepted",
+    cell: ({ row }) => <div>{row.original.accepted ? "Yes" : "No"}</div>,
+  },
+  {
+    // Column for Rejected
+    id: "rejected",
+    accessorKey: "rejected",
+    header: "Rejected",
+    cell: ({ row }) => <div>{row.original.rejected ? "Yes" : "No"}</div>,
   },
   {
     // Actions column with a dropdown menu

@@ -86,7 +86,6 @@
 
 
 
-
 "use client"
 
 import { useForm, FormProvider } from "react-hook-form";
@@ -100,15 +99,15 @@ import { useState } from "react";
 interface Produce {
   name: string;
   description: string;
-  image: File | null; // Added image field
+  image: File | null; // Image can be either File or null
 }
 
 const ProduceCreateForm = () => {
-  const methods = useForm({
+  const methods = useForm<Produce>({
     defaultValues: {
       name: "",
       description: "",
-      image: null, // Default value for image
+      image: null, // Set initial value for image as null
     },
   });
 
@@ -118,7 +117,7 @@ const ProduceCreateForm = () => {
   const onImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
     setSelectedImage(file);
-    setValue('image', file); // Update form value with the selected image
+    setValue('image', file); // Set image to either File or null
   };
 
   const onSubmit = async (data: Produce) => {

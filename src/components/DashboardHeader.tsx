@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { Search } from "lucide-react";
 import {
   DropdownMenu,
@@ -46,8 +45,8 @@ const DashboardHeader = () => {
                 </AvatarFallback>
               </Avatar>
               <div className="flex items-center space-x-1 capitalize pr-4">
-                <p>{session?.data?.user.first_name}</p>{" "}
-                <p>{session?.data?.user.last_name}</p>
+                <p>{session?.data?.user?.first_name}</p>{" "}
+                <p>{session?.data?.user?.last_name}</p>
               </div>
             </div>
           </DropdownMenuTrigger>

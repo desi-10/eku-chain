@@ -142,7 +142,7 @@ export const orderColumns: ColumnDef<Order>[] = [
     id: "pay",
     cell: () => (
       <Button asChild className="bg-emerald-500 hover:bg-green-600">
-        <Link href="/dashboard/orders/create">Make Payment</Link>
+        <Link href="/dashboard/payments/create">Make Payment</Link>
       </Button>
     ),
   },

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
@@ -105,7 +106,13 @@ export const columns: ColumnDef<Post>[] = [
     header: () => <Button variant="ghost">Image</Button>,
     cell: ({ row }) => (
       <div className="w-24 rounded overflow-hidden">
-        <img src={row.original.image || "https://archive.org/download/placeholder-image/placeholder-image.jpg"} className="w-24 h-24 rounded" />
+        <img
+          src={
+            row.original.image ||
+            "https://archive.org/download/placeholder-image/placeholder-image.jpg"
+          }
+          className="w-24 h-24 rounded object-cover"
+        />
       </div>
     ),
   },
@@ -179,6 +186,9 @@ export const columns: ColumnDef<Post>[] = [
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <Link href={`/dashboard/farmer/${data.id}`}>View Farmer</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Button>Create Order</Button>
             </DropdownMenuItem>
             <DropdownMenuItem>
               <div className="text-red-500">Delete</div>

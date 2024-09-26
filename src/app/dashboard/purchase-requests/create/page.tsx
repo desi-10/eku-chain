@@ -80,6 +80,33 @@ const PurchaseRequestForm = () => {
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+
+        {/* Produce */}
+        <FormItem>
+          <Label htmlFor="produce">Produce</Label>
+          <FormControl>
+            <Controller
+              control={control}
+              name="produce"
+              rules={{ required: true }}
+              render={({ field }) => (
+                <Select value={field.value.toString()} onValueChange={(value) => field.onChange(parseInt(value))}>
+                  <SelectTrigger id="produce">
+                    {field.value ? `Produce #${field.value}` : "Select produce"}
+                  </SelectTrigger>
+                  <SelectContent>
+                    {produces.map((produce) => (
+                      <SelectItem key={produce.id} value={produce.id.toString()}>
+                        {produce.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
+          </FormControl>
+        </FormItem>
+        
         {/* Quantity Requested */}
         <FormItem>
           <Label htmlFor="quantity_requested">Quantity Requested (tons)</Label>
@@ -138,32 +165,6 @@ const PurchaseRequestForm = () => {
                     <SelectItem value="pending">Pending</SelectItem>
                     <SelectItem value="cancelled">Cancelled</SelectItem>
                     <SelectItem value="completed">Completed</SelectItem>
-                  </SelectContent>
-                </Select>
-              )}
-            />
-          </FormControl>
-        </FormItem>
-
-        {/* Produce */}
-        <FormItem>
-          <Label htmlFor="produce">Produce</Label>
-          <FormControl>
-            <Controller
-              control={control}
-              name="produce"
-              rules={{ required: true }}
-              render={({ field }) => (
-                <Select value={field.value.toString()} onValueChange={(value) => field.onChange(parseInt(value))}>
-                  <SelectTrigger id="produce">
-                    {field.value ? `Produce #${field.value}` : "Select produce"}
-                  </SelectTrigger>
-                  <SelectContent>
-                    {produces.map((produce) => (
-                      <SelectItem key={produce.id} value={produce.id.toString()}>
-                        {produce.name}
-                      </SelectItem>
-                    ))}
                   </SelectContent>
                 </Select>
               )}

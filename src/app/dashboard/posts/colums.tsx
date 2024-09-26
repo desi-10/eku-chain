@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
@@ -99,6 +100,16 @@ export const columns: ColumnDef<Post>[] = [
     cell: ({ row }) => <div className="truncate w-44">{row.original.id}</div>,
   },
   {
+    id: "Image",
+    accessorKey: "image", // Use the correct accessorKey for your data
+    header: () => <Button variant="ghost">Image</Button>,
+    cell: ({ row }) => (
+      <div className="w-24 rounded overflow-hidden">
+        <img src={row.original.image || "https://archive.org/download/placeholder-image/placeholder-image.jpg"} className="w-24 h-24 rounded" />
+      </div>
+    ),
+  },
+  {
     id: "Farmer",
     accessorKey: "farmer",
     header: ({ column }) => (
@@ -167,7 +178,7 @@ export const columns: ColumnDef<Post>[] = [
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <Link href={`/farmer/${data.id}`}>View Farmer</Link>
+              <Link href={`/dashboard/farmer/${data.id}`}>View Farmer</Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
               <div className="text-red-500">Delete</div>

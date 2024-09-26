@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
@@ -11,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
+import PaymentDialog from "../payments/create/PaymentDialog";
 
 // Type for Order
 interface Order {
@@ -52,10 +54,26 @@ export const orderColumns: ColumnDef<Order>[] = [
     enableHiding: false,
   },
   {
+    id: "image",
+    accessorKey: "produce.image", // Use the correct accessorKey for your data
+    header: () => <Button variant="ghost">Order No</Button>,
+    cell: ({ row }) => (
+      <div className="w-44 rounded overflow-hidden">
+        <img
+          className="object-cover w-full h-full"
+          src={row.original.produce?.image || "http://via.placeholder.com/150"}
+          alt="produce image"
+        />
+      </div>
+    ),
+  },
+  {
     id: "orderNo",
     accessorKey: "order_number", // Use the correct accessorKey for your data
     header: () => <Button variant="ghost">Order No</Button>,
-    cell: ({ row }) => <div className="truncate w-44">{row.original.order_number || "N/A"}</div>,
+    cell: ({ row }) => (
+      <div className="truncate w-44">{row.original.order_number || "N/A"}</div>
+    ),
   },
   {
     id: "orderProduce",
@@ -121,6 +139,14 @@ export const orderColumns: ColumnDef<Order>[] = [
     ),
   },
   {
+    id: "pay",
+    cell: () => (
+      <Button asChild className="bg-emerald-500 hover:bg-green-600">
+        <Link href="/dashboard/orders/create">Make Payment</Link>
+      </Button>
+    ),
+  },
+  {
     id: "actions",
     cell: ({ row }) => {
       const data = row.original;
@@ -146,11 +172,6 @@ export const orderColumns: ColumnDef<Order>[] = [
             </DropdownMenuItem>
             <DropdownMenuItem>
               <div className="text-red-500">Delete</div>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Button className="bg-emerald-500 hover:bg-green-600">
-                Make Payment
-              </Button>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
+import PostDialog from "./PostDialog";
 
 // Type for Farmer
 interface Farmer {
@@ -87,20 +88,6 @@ export const columns: ColumnDef<Post>[] = [
     enableHiding: false,
   },
   {
-    id: "Post Id",
-    accessorKey: "id", // Use the correct accessorKey for your data
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        Farmer ID
-        <ArrowUpDown className="ml-2 h-4 w-4" />
-      </Button>
-    ),
-    cell: ({ row }) => <div className="truncate w-44">{row.original.id}</div>,
-  },
-  {
     id: "Image",
     accessorKey: "image", // Use the correct accessorKey for your data
     header: () => <Button variant="ghost">Image</Button>,
@@ -114,6 +101,47 @@ export const columns: ColumnDef<Post>[] = [
           className="w-24 h-24 rounded object-cover"
         />
       </div>
+    ),
+  },
+  {
+    id: "produce", // This field doesn't exist in the provided data, it should be removed or replaced
+    accessorKey: "produce.name", // Update with a valid key if necessary
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Produce Name
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }) => <div className="">{row.original.farmer.first_name}</div>, // Replace with valid key if needed
+  },
+  // expected_quantity
+  {
+    id: "Quantity",
+    accessorKey: "expected_quantity",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Expected Quantity
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+  },
+  {
+    id: "Price per ton",
+    accessorKey: "price_per_ton",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Price Per Ton
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
     ),
   },
   {
@@ -136,20 +164,6 @@ export const columns: ColumnDef<Post>[] = [
     enableHiding: false,
   },
   {
-    id: "produce", // This field doesn't exist in the provided data, it should be removed or replaced
-    accessorKey: "produce.name", // Update with a valid key if necessary
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        Produce Name
-        <ArrowUpDown className="ml-2 h-4 w-4" />
-      </Button>
-    ),
-    cell: ({ row }) => <div className="">{row.original.farmer.first_name}</div>, // Replace with valid key if needed
-  },
-  {
     id: "Location",
     accessorKey: "location",
     header: ({ column }) => (
@@ -162,6 +176,10 @@ export const columns: ColumnDef<Post>[] = [
       </Button>
     ),
     cell: ({ row }) => <div className="">{row.original.location}</div>,
+  },
+  {
+    id: "Dialog",
+    cell: ({ row }) => <PostDialog data={row.original} />,
   },
   {
     id: "actions",
@@ -188,7 +206,9 @@ export const columns: ColumnDef<Post>[] = [
               <Link href={`/dashboard/farmer/${data.id}`}>View Farmer</Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <Button>Create Order</Button>
+              <Button asChild className="bg-green-500 hover:bg-green-700">
+                <Link href="/dashboard/orders/create">Place Order</Link>
+              </Button>
             </DropdownMenuItem>
             <DropdownMenuItem>
               <div className="text-red-500">Delete</div>

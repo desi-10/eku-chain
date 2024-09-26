@@ -52,33 +52,25 @@ export const orderColumns: ColumnDef<Order>[] = [
     enableHiding: false,
   },
   {
-    id: "orderId",
-    accessorKey: "id", // Use the correct accessorKey for your data
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        Order ID
-        <ArrowUpDown className="ml-2 h-4 w-4" />
-      </Button>
-    ),
-    cell: ({ row }) => <div className="truncate w-44">{row.original.id}</div>,
+    id: "orderNo",
+    accessorKey: "order_number", // Use the correct accessorKey for your data
+    header: () => <Button variant="ghost">Order No</Button>,
+    cell: ({ row }) => <div className="truncate w-44">{row.original.order_number || "N/A"}</div>,
   },
   {
-    id: "orderDescription",
-    accessorKey: "order_description", // Use the correct accessorKey for your data
+    id: "orderProduce",
+    accessorKey: "produce.name", // Use the correct accessorKey for your data
     header: ({ column }) => (
       <Button
         variant="ghost"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
       >
-        Order Description
+        Produce
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
     cell: ({ row }) => (
-      <div className="truncate">{row.original.order_description}</div>
+      <div className="truncate">{row.original.produce.name}</div>
     ),
     enableHiding: false,
   },
@@ -154,6 +146,11 @@ export const orderColumns: ColumnDef<Order>[] = [
             </DropdownMenuItem>
             <DropdownMenuItem>
               <div className="text-red-500">Delete</div>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Button className="bg-emerald-500 hover:bg-green-600">
+                Make Payment
+              </Button>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

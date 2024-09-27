@@ -40,7 +40,7 @@ const produceColorMap: Record<string, string> = {
   Unknown: "#D2691E", // Fallback color
 };
 
-const InventoryChart = () => {
+const InventoryChart = ({ refetchTrigger }: { refetchTrigger: boolean }) => {
   const [chartData, setChartData] = useState<any[]>([]); // Holds the mapped chart data
   const [chartConfig, setChartConfig] = useState<ChartConfig | null>(null); // Chart config
 
@@ -89,7 +89,7 @@ const InventoryChart = () => {
     };
 
     fetchInventoryData();
-  }, []);
+  }, [refetchTrigger]);
 
   if (!chartConfig) {
     return <div>Loading chart...</div>;

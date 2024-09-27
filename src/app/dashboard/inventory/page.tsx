@@ -1,14 +1,15 @@
-"use client"
+"use client";
 
 import InventoryChart from '@/components/InventoryChart';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import Swal from 'sweetalert2'; // Importing SweetAlert
 
 const InventoryUpdateForm = () => {
   const [produces, setProduces] = useState([]);
   const [selectedProduce, setSelectedProduce] = useState('');
   const [quantity, setQuantity] = useState('');
-  const [message, setMessage] = useState('');
+  const [refetchTrigger, setRefetchTrigger] = useState(false); // New state for refetching
 
   // Fetch produces data for the dropdown
   useEffect(() => {
@@ -30,7 +31,11 @@ const InventoryUpdateForm = () => {
     e.preventDefault();
 
     if (!selectedProduce || !quantity) {
-      setMessage('Please fill out all fields.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please fill out all fields.',
+      });
       return;
     }
 
@@ -40,8 +45,8 @@ const InventoryUpdateForm = () => {
     };
 
     try {
-      const response = await fetch('https://agriguru.pythonanywhere.com/api/inventory/', {
-        method: 'POST',
+      const response = await fetch(`https://agriguru.pythonanywhere.com/api/inventory/${payload.produce}/`, {
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -49,21 +54,34 @@ const InventoryUpdateForm = () => {
       });
 
       if (response.ok) {
-        setMessage('Inventory updated successfully!');
+        // Swal.fire({
+        //   icon: 'success',
+        //   title: 'Success!',
+        //   text: 'Inventory updated successfully!',
+        // });
         setSelectedProduce('');
         setQuantity('');
+        setRefetchTrigger((prev) => !prev); // Toggle the refetch state
       } else {
-        setMessage('Error updating inventory.');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: 'Error updating inventory.',
+        });
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      setMessage('An error occurred while updating inventory.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'An error occurred while updating inventory.',
+      });
     }
   };
 
   return (
     <div className="flex gap-4">
-      <InventoryChart />
+      <InventoryChart refetchTrigger={refetchTrigger} /> {/* Pass refetchTrigger */}
       <Card>
         <CardHeader>
           <CardTitle>Inventory</CardTitle>
@@ -109,13 +127,10 @@ const InventoryUpdateForm = () => {
             {/* Submit button */}
             <button
               type="submit"
-              className="bg-green-500 text-white font-bold py-2 px-4 rounded-md w-full"
+              className="bg-emerald-500 text-white font-bold py-2 px-4 rounded-md w-full"
             >
               Update Inventory
             </button>
-
-            {/* Message display */}
-            {message && <p className="mt-4 text-red-500">{message}</p>}
           </form>
         </CardContent>
       </Card>

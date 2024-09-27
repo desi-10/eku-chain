@@ -26,12 +26,16 @@ const DashboardSideBar = () => {
       link: "/dashboard/payments",
     },
     {
-      name: "Purchase-Request",
+      name: "Purchase Request",
       link: "/dashboard/purchase-requests",
     },
     {
-      name: "Purchase-Response",
+      name: "Purchase Response",
       link: "/dashboard/purchase-responses",
+    },
+    {
+      name: "Inventory Management",
+      link: "/dashboard/inventory",
     },
   ];
 

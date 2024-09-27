@@ -1,7 +1,7 @@
 "use client";
 
 import { Bar, BarChart, CartesianGrid, Rectangle, XAxis } from "recharts";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
@@ -31,12 +31,13 @@ interface Produce {
 
 // Define a color map for each produce type
 const produceColorMap: Record<string, string> = {
+  Orange: "#FFA500",
   Pineapple: "#FFD700",
-  Ginger: "#D2691E",
+  Ginger: "#A9A9A9",
   Tomato: "#FF6347",
   Mango: "#FFB347",
   // Add more produces and colors as needed
-  Unknown: "#A9A9A9", // Fallback color
+  Unknown: "#D2691E", // Fallback color
 };
 
 const InventoryChart = () => {
@@ -95,9 +96,10 @@ const InventoryChart = () => {
   }
 
   return (
-    <Card>
+    <Card className="flex-1">
       <CardHeader>
         <CardTitle>Inventory Level</CardTitle>
+        <CardDescription>Total inventory</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>

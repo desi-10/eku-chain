@@ -208,6 +208,7 @@ import {
 import Swal from "sweetalert2";
 import PaymentDialog from "./PaymentDialog";
 import { GiCash } from "react-icons/gi";
+import { useSearchParams } from "next/navigation";
 
 interface Payment {
   amount: number;
@@ -230,15 +231,19 @@ interface Order {
 }
 
 const PaymentCreateForm = () => {
+  const searchParams = useSearchParams();
+  const orderId = searchParams.get("o") ? parseInt(searchParams.get("o")!) : undefined;
+
   const [orders, setOrders] = useState<Order[]>([]);
   const methods = useForm<Payment>({
     defaultValues: {
       amount: 0,
       payment_method: "",
       payment_description: "",
-      order: 0,
+      order: orderId,
     },
   });
+
 
   const { handleSubmit, control, reset } = methods;
 
@@ -247,7 +252,7 @@ const PaymentCreateForm = () => {
     control,
     name: "payment_method",
   });
-  
+
   const amount = useWatch({
     control,
     name: "amount",
@@ -312,6 +317,7 @@ const PaymentCreateForm = () => {
               rules={{ required: true }}
               render={({ field }) => (
                 <Select
+                  defaultValue={orderId || undefined}
                   value={field.value.toString()}
                   onValueChange={(value) => field.onChange(parseInt(value))}
                 >
@@ -385,7 +391,11 @@ const PaymentCreateForm = () => {
 
         {/* Conditionally display buttons */}
         {["momo", "bank"].includes(paymentMethod) ? (
-          <PaymentDialog amount={amount} data={methods.getValues()} onSubmit={onSubmit} />
+          <PaymentDialog
+            amount={amount}
+            data={methods.getValues()}
+            onSubmit={onSubmit}
+          />
         ) : (
           <Button type="submit">
             <GiCash className="mr-2 text-lg" /> Pay Cash

@@ -26,6 +26,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import InventoryChart from "@/components/InventoryChart";
 
 type Payment = {
   id: number;
@@ -99,7 +100,6 @@ const Overview = async () => {
     (response: { accepted: boolean }) => response.accepted
   ).length;
 
-
   const paymentData = await paymentResponse.json();
   const totalPurchases = paymentData?.reduce(
     (total: number, payment: { amount: string }) =>
@@ -152,7 +152,9 @@ const Overview = async () => {
         </Card>
         <Card x-chunk="dashboard-01-chunk-3">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Accepted Request</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Accepted Request
+            </CardTitle>
             <Activity className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -163,6 +165,11 @@ const Overview = async () => {
           </CardContent>
         </Card>
       </div>
+      
+      <section>
+        <InventoryChart />
+      </section>
+
       <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
         <Card className="xl:col-span-2" x-chunk="dashboard-01-chunk-4">
           <CardHeader className="flex flex-row items-center">

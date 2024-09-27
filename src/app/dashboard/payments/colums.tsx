@@ -51,18 +51,20 @@ export const paymentColumns: ColumnDef<Payment>[] = [
     enableHiding: false,
   },
   {
-    id: "paymentId",
-    accessorKey: "id", // Use the correct accessorKey for your data
+    id: "paymentReference",
+    accessorKey: "payment_reference",
     header: ({ column }) => (
       <Button
         variant="ghost"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
       >
-        Payment ID
+        Payment Reference
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
-    cell: ({ row }) => <div className="truncate w-44">{row.original.id}</div>,
+    cell: ({ row }) => (
+      <div className="truncate w-64">{row.original.payment_reference}</div>
+    ),
   },
   {
     id: "amount",
@@ -123,22 +125,6 @@ export const paymentColumns: ColumnDef<Payment>[] = [
       <div className="">
         {new Date(row.original.payment_date).toLocaleString()}
       </div>
-    ),
-  },
-  {
-    id: "paymentReference",
-    accessorKey: "payment_reference",
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        Payment Reference
-        <ArrowUpDown className="ml-2 h-4 w-4" />
-      </Button>
-    ),
-    cell: ({ row }) => (
-      <div className="truncate w-64">{row.original.payment_reference}</div>
     ),
   },
   {

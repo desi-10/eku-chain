@@ -207,7 +207,7 @@ export const columns: ColumnDef<Post>[] = [
             </DropdownMenuItem>
             <DropdownMenuItem>
               <Button asChild className="bg-green-500 hover:bg-green-700">
-                <Link href="/dashboard/orders/create">Place Order</Link>
+                <Link href={`/dashboard/orders/create?f=${data.farmer.id}&p=${data.produce.id}&q=${data.expected_quantity}`}>Place Order</Link>
               </Button>
             </DropdownMenuItem>
             <DropdownMenuItem>

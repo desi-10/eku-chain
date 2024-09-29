@@ -232,7 +232,9 @@ interface Order {
 
 const PaymentCreateForm = () => {
   const searchParams = useSearchParams();
-  const orderId = searchParams.get("o") ? parseInt(searchParams.get("o")!) : undefined;
+  const orderId = searchParams.get("o")
+    ? parseInt(searchParams.get("o")!)
+    : undefined;
 
   const [orders, setOrders] = useState<Order[]>([]);
   const methods = useForm<Payment>({
@@ -243,7 +245,6 @@ const PaymentCreateForm = () => {
       order: orderId,
     },
   });
-
 
   const { handleSubmit, control, reset } = methods;
 
@@ -317,8 +318,8 @@ const PaymentCreateForm = () => {
               rules={{ required: true }}
               render={({ field }) => (
                 <Select
-                  defaultValue={orderId || undefined}
-                  value={field.value.toString()}
+                  defaultValue={orderId?.toString() || undefined}
+                  value={field.value?.toString()}
                   onValueChange={(value) => field.onChange(parseInt(value))}
                 >
                   <SelectTrigger id="order">

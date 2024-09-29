@@ -27,6 +27,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import InventoryChart from "@/components/InventoryChart";
+import TopPurchase from "@/components/TopPurchase";
 
 type Payment = {
   id: number;
@@ -165,9 +166,12 @@ const Overview = async () => {
           </CardContent>
         </Card>
       </div>
-      
-      <section>
+
+      <section className="flex gap-8">
         <InventoryChart />
+        <div className="w-1/2">
+          <TopPurchase />
+        </div>
       </section>
 
       <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
@@ -200,7 +204,7 @@ const Overview = async () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {paymentData?.map((payment: Payment) => (
+                {paymentData?.slice(5)?.map((payment: Payment) => (
                   <TableRow key={payment.id}>
                     <TableCell>
                       <div className="font-medium">
@@ -235,7 +239,7 @@ const Overview = async () => {
             <CardTitle>Recent Order</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-8">
-            {orderData?.map((order: Order) => (
+            {orderData?.slice(5)?.map((order: Order) => (
               <div key={order.id} className="flex items-center gap-4">
                 <Avatar className="hidden h-9 w-9 sm:flex">
                   <AvatarImage src={order?.produce?.image} alt="Avatar" />

@@ -56,7 +56,7 @@ export const orderColumns: ColumnDef<Order>[] = [
   {
     id: "image",
     accessorKey: "produce.image", // Use the correct accessorKey for your data
-    header: () => <Button variant="ghost">Order No</Button>,
+    header: () => <Button variant="ghost">Image</Button>,
     cell: ({ row }) => (
       <div className="w-44 rounded overflow-hidden">
         <img

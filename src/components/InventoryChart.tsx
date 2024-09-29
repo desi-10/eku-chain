@@ -35,7 +35,7 @@ const produceColorMap: Record<string, string> = {
   Pineapple: "#FFD700",
   Ginger: "#A9A9A9",
   Tomato: "#FF6347",
-  Mango: "#FFB347",
+  Mango: "#90EE90",
   // Add more produces and colors as needed
   Unknown: "#D2691E", // Fallback color
 };

@@ -204,7 +204,7 @@ const Overview = async () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {paymentData?.slice(5)?.map((payment: Payment) => (
+                {paymentData?.slice(0, 5)?.map((payment: Payment) => (
                   <TableRow key={payment.id}>
                     <TableCell>
                       <div className="font-medium">
@@ -239,11 +239,11 @@ const Overview = async () => {
             <CardTitle>Recent Order</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-8">
-            {orderData?.slice(5)?.map((order: Order) => (
+            {orderData?.slice(0, 5)?.map((order: Order) => (
               <div key={order.id} className="flex items-center gap-4">
                 <Avatar className="hidden h-9 w-9 sm:flex">
                   <AvatarImage src={order?.produce?.image} alt="Avatar" />
-                  <AvatarFallback>OM</AvatarFallback>
+                  <AvatarFallback>{order?.produce.name[0]}</AvatarFallback>
                 </Avatar>
                 <div className="grid gap-1">
                   <p className="text-sm font-medium leading-none">
